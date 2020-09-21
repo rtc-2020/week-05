@@ -23,3 +23,14 @@ function zeroPad(val,length) {
   }
   return val;
 }
+
+// Call up a Web Worker
+if ('Worker' in window) {
+  console.log('Spinning up and posting a message to a Web Worker');
+  var my_worker = new Worker('worker.js');
+  my_worker.postMessage('Can you hear me, Worker?');
+  my_worker.onmessage = function(data) {
+    console.log('The Web Worker says: ', data.data)
+    console.log(data);
+  }
+}
