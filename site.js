@@ -1,3 +1,13 @@
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(function(registration) {
+      console.log(`Successfully registered service worker to ${registration.scope}`);
+    })
+    .catch(function(error) {
+      console.error('Could not register service worker', error)
+    });
+}
+
 var clock = document.querySelector('#clock');
 
 setInterval(function(){
