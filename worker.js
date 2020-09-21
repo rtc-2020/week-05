@@ -12,7 +12,7 @@ onmessage = function(data) {
   }
 };
 
-function doHardWork() {
+async function doHardWork() {
   var i;
   for (i=0; i < 100000000; i++) {
     i = i * 2000;
