@@ -33,4 +33,10 @@ if ('Worker' in window) {
     console.log('The Web Worker says: ', data.data)
     console.log(data);
   }
+
+  var button = document.querySelector('#work');
+  button.addEventListener('click', function(e) {
+    my_worker.postMessage('Do work');
+  });
+
 }
