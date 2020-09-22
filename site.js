@@ -50,3 +50,37 @@ if ('Worker' in window) {
   });
 
 }
+
+
+// Web notifications
+
+if ('Notification' in window) {
+  console.log('Sweet. We have notifications in this browser.');
+  var notify_button = document.createElement('button');
+  notify_button.innerText = 'Send Me Notifications';
+  notify_button.id = 'notify';
+  notify_button.addEventListener('click', function(e) {
+    console.log('The notifications button has been clicked, and we are ready for action');
+    Notification.requestPermission()
+      .then(function(permission) {
+        console.log("Permission: ", permission);
+      })
+      .catch(function(error) {
+        console.error("Error: ", error)
+      });
+  });
+  document.querySelector('body').append(notify_button);
+  if (Notification.permission == 'granted') {
+    var test_notify_button = document.createElement('button');
+    test_notify_button.innerText = 'Send A Test Notification';
+    test_notify_button.id = 'test-notify';
+    test_notify_button.addEventListener('click', function(e) {
+      var notification_options = {
+        body: "And here are some additional details.",
+
+      }
+      var test_notification = new Notification('Hi there! This is a local notification.');
+    });
+    document.querySelector('body').append(test_notify_button);
+  }
+}
