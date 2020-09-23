@@ -8,6 +8,7 @@ const logger = require('morgan');
 const socket = require('socket.io')();
 
 const indexRouter = require('./routes/index');
+const subscriptionRouter = require('./routes/subscription');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/subscription', subscriptionRouter)
 
 // send a message on successful socket connection
 socket.on('connection', function(){
