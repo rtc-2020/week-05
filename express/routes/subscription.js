@@ -5,10 +5,10 @@ const fs = require('fs');
 const router = express.Router();
 
 router.post('/', function(req, res, next) {
-  var data = JSON.stringify(req.body);
+  var data = JSON.stringify(req.body) + '\n';
   console.log('From the new router...')
   console.log(data);
-  fs.promises.writeFile('var/subscriptions.json', data, {encoding:'utf8'})
+  fs.promises.appendFile('var/subscriptions.json', data, {encoding:'utf8'})
   .then(function(result) {
     res.json({status: 'subscribed'});
   })
