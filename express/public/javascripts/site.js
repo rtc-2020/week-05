@@ -63,7 +63,7 @@ if ('serviceWorker' in navigator) {
       } // if notification
     })
     .catch(function(error) {
-      console.error('Could not register service worker', error)
+      console.error('Could not register service worker', error);
     });
 } // if service worker...
 
