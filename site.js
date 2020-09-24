@@ -80,6 +80,14 @@ if ('Notification' in window) {
 
       }
       var test_notification = new Notification('Hi there! This is a local notification.');
+      // Listen for clicks on the notification itself; close it, and post an annoying alert
+      // Note this event does not fire if someone clicks "Close" on the notification, which
+      // is a good thing. Same behavior in the popup as well as the notification center inspector
+      // in MacOS.
+      test_notification.addEventListener('click', function(event) {
+        test_notification.close();
+        alert('The notification was clicked!');
+      })
     });
     document.querySelector('body').append(test_notify_button);
   }
