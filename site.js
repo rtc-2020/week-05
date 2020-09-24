@@ -69,4 +69,17 @@ if ('Notification' in window) {
   });
 
   document.querySelector('body').append(notify_me_button);
-}
+
+  if(Notification.permission == 'granted') {
+    console.log('Permission granted for notifications');
+    var test_notify_button = document.createElement('button');
+    test_notify_button.id = "test-notify";
+    test_notify_button.innerText = 'Send Test Notification';
+    test_notify_button.addEventListener('click', function(event) {
+      var notification = new Notification('Hello! This is a notification!');
+    });
+    document.querySelector('body').append(test_notify_button);
+  }
+
+
+} // end of if Notification...
