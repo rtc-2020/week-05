@@ -139,3 +139,8 @@ addEventListener('push', function(event) {
     console.log("Push event, but no data (bad, bad practice).");
   }
 });
+
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close();
+  event.waitUntil(clients.openWindow('https://localhost:3000/'));
+});
