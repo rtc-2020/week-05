@@ -131,3 +131,11 @@ addEventListener('fetch', function(fe) {
 });
 
 // Logic to handle push notifications goes here...
+
+addEventListener('push', function(event) {
+  if (event.data) {
+    event.waitUntil(self.registration.showNotification(event.data.text()));
+  } else {
+    console.log("Push event, but no data (bad, bad practice).");
+  }
+});
