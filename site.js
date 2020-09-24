@@ -52,3 +52,21 @@ if ('Worker' in window) {
 
 }
 */
+
+if ('Notification' in window) {
+  console.log('This browser supports notifications!');
+  var notify_me_button = document.createElement('button');
+  notify_me_button.id = "notify-me";
+  notify_me_button.innerText = 'Send me Notifications';
+  notify_me_button.addEventListener('click', function(event) {
+    Notification.requestPermission()
+      .then(function(permission) {
+        console.log('Permission: ', permission)
+      })
+      .catch(function(error) {
+        console.error('Permission error:', error);
+      });
+  });
+
+  document.querySelector('body').append(notify_me_button);
+}
