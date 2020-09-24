@@ -77,6 +77,9 @@ if ('Notification' in window) {
     test_notify_button.innerText = 'Send Test Notification';
     test_notify_button.addEventListener('click', function(event) {
       var notification = new Notification('Hello! This is a notification!');
+      notification.addEventListener('click', function(event) {
+        notification.close();
+      });
     });
     document.querySelector('body').append(test_notify_button);
   }
