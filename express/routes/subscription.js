@@ -25,4 +25,8 @@ router.post('/', function(req, res, next) {
   */
 });
 
+router.get('/public-key/', function(req, res, next) {
+  res.json({vapid_public_key: process.env.VAPID_PUBLIC_KEY});
+});
+
 module.exports = router
