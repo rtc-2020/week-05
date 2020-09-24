@@ -129,3 +129,17 @@ addEventListener('fetch', function(fe) {
   }
 
 });
+
+addEventListener('push', function(event){
+  if (event.data) {
+    event.waitUntil(self.registration.showNotification(event.data.text()));
+  } else {
+    console.log('Push event but no data')
+  }
+});
+
+// https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/onnotificationclick
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close();
+  event.waitUntil(clients.openWindow('https://localhost:3000/'));
+});
