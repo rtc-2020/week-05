@@ -35,6 +35,7 @@ function zeroPad(val,length) {
 }
 
 // Call up a Web Worker
+/*
 if ('Worker' in window) {
   console.log('Spinning up and posting a message to a Web Worker');
   var my_worker = new Worker('worker.js');
@@ -50,3 +51,4 @@ if ('Worker' in window) {
   });
 
 }
+*/
