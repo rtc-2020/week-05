@@ -2,6 +2,7 @@
 
 const createError = require('http-errors');
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -24,12 +25,54 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/subscription', subscriptionRouter)
+app.use('/subscription', subscriptionRouter);
 
+// Listen for changes on var/text.txt and push a notification
+fs.watchFile('var/text.txt', function() {
+  fs.promises.readFile(`var/text.txt`, {encoding:"utf8"})
+    .then(function(data) {
+      const message = data;
+      const vapid_keys = {
+        public: process.env.VAPID_PUBLIC_KEY,
+        private: process.env.VAPID_PRIVATE_KEY
+      };
+      webpush.setVapidDetails(
+        'mailto:karl.stolley@gmail.com',
+        vapid_keys.public,
+        vapid_keys.private
+      );
+      // read subscriptions file; break into an array on newline (NDJSON)
+      fs.promises.readFile(`var/subscriptions.json`, {encoding:"utf8"})
+        .then(function(subs) {
+          let subscriptions = subs.split('\n');
+          subscriptions.map(function(subscription) {
+            if (subscription.length > 5) {
+              subscription = JSON.parse(subscription);
+              console.log('Subscription to send to:', subscription);
+              console.log('Message to send:', message);
+              webpush.sendNotification(subscription, message)
+              .catch(function(error) {
+                console.error('sendNotification error: ', error, subscription, message);
+              });
+            }
+          });
+        })
+        .catch(function(error) {
+          console.error('Error: ', error);
+        });
+    })
+    .catch(function(error) {
+      console.error('Error: ', error);
+    });
+  }
+);
+
+/*
 // send a message on successful socket connection
 socket.on('connection', function(){
   socket.emit('message', 'Successfully connected.');
 });
+*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
